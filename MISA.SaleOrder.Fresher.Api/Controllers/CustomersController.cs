@@ -32,6 +32,7 @@ namespace SalesManagement.Api.Controllers
             var result = await _customerService.GetCustomers();
             return result;
         }
+
         [HttpGet("{customerCode}")]
         public async Task<BaseResult<List<CustomerDto>>> GetCustomerByCustomerCode(string customerCode)
         {

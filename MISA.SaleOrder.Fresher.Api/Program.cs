@@ -25,6 +25,8 @@ Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
+builder.Services.AddScoped<ICustomerTypeRepo, CustomerTypeRepo>();
+builder.Services.AddScoped<ICustomerTypeService, CustomerTypeService>();
 
 builder.Services.AddAutoMapper(typeof(ModelToResourseProfile).Assembly);
 

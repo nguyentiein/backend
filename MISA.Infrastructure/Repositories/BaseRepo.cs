@@ -91,9 +91,10 @@ namespace SalesManagement.DataAccess.Repositories
             var tableAttr = (MISATableNameAttribute?)Attribute.GetCustomAttribute(typeof(T), typeof(MISATableNameAttribute));
             if (tableAttr != null)
                 tableName = tableAttr.TableName;
-            return tableName.ToLower();
-        }
 
+            // Chuyển sang snake_case
+            return ToSnakeCase(tableName);
+        }
 
         private static string ToSnakeCase(string input)
         {
