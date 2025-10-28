@@ -1,0 +1,13 @@
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\bin\Debug\net8.0\MISA.Core.deps.json
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\bin\Debug\net8.0\MISA.Core.dll
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\bin\Debug\net8.0\MISA.Core.pdb
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\MISA.Core.csproj.AssemblyReference.cache
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\MISA.Core.GeneratedMSBuildEditorConfig.editorconfig
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\MISA.Core.AssemblyInfoInputs.cache
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\MISA.Core.AssemblyInfo.cs
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\MISA.Core.csproj.CoreCompileInputs.cache
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\MISA.Core.sourcelink.json
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\MISA.Core.dll
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\refint\MISA.Core.dll
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\MISA.Core.pdb
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\ref\MISA.Core.dll

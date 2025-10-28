@@ -1,0 +1,13 @@
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\bin\Debug\net8.0\SalesManagement.BusinessLogic.deps.json
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\bin\Debug\net8.0\SalesManagement.BusinessLogic.dll
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\bin\Debug\net8.0\SalesManagement.BusinessLogic.pdb
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.csproj.AssemblyReference.cache
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.AssemblyInfoInputs.cache
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.AssemblyInfo.cs
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.csproj.CoreCompileInputs.cache
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.sourcelink.json
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.dll
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\refint\SalesManagement.BusinessLogic.dll
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.pdb
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Core\obj\Debug\net8.0\ref\SalesManagement.BusinessLogic.dll

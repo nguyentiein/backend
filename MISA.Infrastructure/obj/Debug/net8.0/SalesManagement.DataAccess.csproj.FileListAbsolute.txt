@@ -1,0 +1,16 @@
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\bin\Debug\net8.0\SalesManagement.DataAccess.deps.json
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\bin\Debug\net8.0\SalesManagement.DataAccess.dll
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\bin\Debug\net8.0\SalesManagement.DataAccess.pdb
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\bin\Debug\net8.0\SalesManagement.BusinessLogic.dll
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\bin\Debug\net8.0\SalesManagement.BusinessLogic.pdb
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\obj\Debug\net8.0\SalesManagement.DataAccess.csproj.AssemblyReference.cache
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\obj\Debug\net8.0\SalesManagement.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\obj\Debug\net8.0\SalesManagement.DataAccess.AssemblyInfoInputs.cache
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\obj\Debug\net8.0\SalesManagement.DataAccess.AssemblyInfo.cs
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\obj\Debug\net8.0\SalesManagement.DataAccess.csproj.CoreCompileInputs.cache
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\obj\Debug\net8.0\SalesManagement.DataAccess.sourcelink.json
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\obj\Debug\net8.0\SalesMan.CAA102E2.Up2Date
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\obj\Debug\net8.0\SalesManagement.DataAccess.dll
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\obj\Debug\net8.0\refint\SalesManagement.DataAccess.dll
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\obj\Debug\net8.0\SalesManagement.DataAccess.pdb
+E:\1.Lab\check\MISA.SaleOrder.Fresher\MISA.Infrastructure\obj\Debug\net8.0\ref\SalesManagement.DataAccess.dll
