@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic.csproj" />
+    <ProjectReference Include="..\MISA.Core\SalesManagement.BusinessLogic.csproj" />
   </ItemGroup>
 
 </Project>

@@ -299,9 +299,9 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "Dapper": "2.1.66",
-          "E:\\1.Lab\\check\\MISA.SaleOrder.Fresher\\BusinessLogic.csproj": "1.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "9.0.10",
-          "MySqlConnector": "2.4.0"
+          "MySqlConnector": "2.4.0",
+          "SalesManagement.BusinessLogic": "1.0.0"
         },
         "compile": {
           "bin/placeholder/SalesManagement.DataAccess.dll": {}
@@ -1105,16 +1105,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1104",
-      "level": "Error",
-      "message": "Unable to find project 'E:\\1.Lab\\check\\MISA.SaleOrder.Fresher\\BusinessLogic.csproj'. Check that the project reference is valid and that the project file exists.",
-      "libraryId": "E:\\1.Lab\\check\\MISA.SaleOrder.Fresher\\BusinessLogic.csproj",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  }
 }
