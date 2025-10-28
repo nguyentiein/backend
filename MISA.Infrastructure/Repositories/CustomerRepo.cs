@@ -181,6 +181,7 @@ LEFT JOIN customer_purchase cp ON c.customer_id = cp.customer_id
 LEFT JOIN purchase_item pi ON cp.purchase_id = pi.purchase_id
 LEFT JOIN product p ON pi.product_id = p.product_id
 LEFT JOIN shipping_address sa ON c.customer_id = sa.customer_id
+WHERE c.is_active = 1
 GROUP BY 
     c.customer_id, 
     ct.customer_type_name, 
@@ -189,7 +190,8 @@ GROUP BY
     c.company_name, 
     c.phone_number
 ORDER BY 
-    c.created_date DESC;
+    c.created_date DESC
+;
 ";
 
             using (var connection = new MySqlConnection(connectionString))
