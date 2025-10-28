@@ -107,8 +107,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "E:\\1.Lab\\check\\MISA.SaleOrder.Fresher\\MISA.Core\\SalesManagement.BusinessLogic.csproj": {
-                "projectPath": "E:\\1.Lab\\check\\MISA.SaleOrder.Fresher\\MISA.Core\\SalesManagement.BusinessLogic.csproj"
+              "E:\\1.Lab\\check\\MISA.SaleOrder.Fresher\\BusinessLogic.csproj": {
+                "projectPath": "E:\\1.Lab\\check\\MISA.SaleOrder.Fresher\\BusinessLogic.csproj"
               }
             }
           }
