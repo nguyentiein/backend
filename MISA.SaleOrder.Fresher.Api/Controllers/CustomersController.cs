@@ -32,12 +32,26 @@ namespace SalesManagement.Api.Controllers
             var result = await _customerService.GetCustomers();
             return result;
         }
+        [HttpGet("{customerCode}")]
+        public async Task<BaseResult<List<CustomerDto>>> GetCustomerByCustomerCode(string customerCode)
+        {
+            var result = await _customerService.GetCustomerByCustomerCode(customerCode);
+            return result;
+        }
+
 
         [HttpPost]
         public async Task<BaseResult<Customer>> InsertCustomer([FromBody] CreateCustomer dto)
         {
             var customer = _mapper.Map<Customer>(dto);
             var result = await _customerService.InsertCustomer(customer);
+            return result;
+        }
+
+        [HttpGet("GenerateCustomerCode")]
+        public async Task<BaseResult<string>> GenerateCustomerCode()
+        {
+            var result = await _customerService.GenerateCustomerCode();
             return result;
         }
 

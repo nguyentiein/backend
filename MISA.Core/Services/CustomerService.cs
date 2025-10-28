@@ -57,5 +57,41 @@ namespace SalesManagement.BusinessLogic.Services
             var deletedCustomer = _customerRepo.RemoveCustomer(customerCode);
             return GetBaseResult(CodeMessage._200, deletedCustomer);
         }
+
+        public async Task<BaseResult<List<CustomerDto>>> GetCustomerByCustomerCode(string customerCode)
+        {
+            int page = 1;
+            int pageSize = 2;
+            var customers = _customerRepo.GetCustomersByCustomerCode(customerCode);
+            var totalRecords = customers.Count;
+            var pagedData = customers
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return new PaginationResult<CustomerDto>(pagedData, page, pageSize, totalRecords);
+        }
+
+        public async Task<BaseResult<string>> GenerateCustomerCode()
+        {
+            string prefix = "KH" + DateTime.Now.ToString("yyyyMM");
+
+            string latestCode = _customerRepo.GetLatestCustomerCode(prefix);
+
+            int nextNumber = 1;
+            if (!string.IsNullOrEmpty(latestCode) && latestCode.Length >= 14)
+            {
+                string lastNumberStr = latestCode.Substring(8); // lấy 6 số cuối
+                if (int.TryParse(lastNumberStr, out int lastNumber))
+                {
+                    nextNumber = lastNumber + 1;
+                }
+            }
+
+            string newCode = prefix + nextNumber.ToString("D6");
+            return GetBaseResult(CodeMessage._200, newCode);
+        }
+
+
     }
 }

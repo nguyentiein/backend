@@ -13,5 +13,7 @@ namespace SalesManagement.BusinessLogic.Interfaces.Repository
         Customer UpdateCustomer(string custemerCode,Customer customer);
         Customer RemoveCustomer(string  customerCode);
         public List<CustomerDto> GetCustomers();
+        public List<CustomerDto> GetCustomersByCustomerCode(string customerCode);
+        string GetLatestCustomerCode(string prefix);
     }
 }
