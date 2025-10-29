@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Options;
+using OfficeOpenXml;
 using  SalesManagement.BusinessLogic.Core.Entities;
 using SalesManagement.BusinessLogic.Dtos;
+using SalesManagement.BusinessLogic.Dtos.Customer;
 using SalesManagement.BusinessLogic.Entities;
 using SalesManagement.BusinessLogic.Exceptions;
 using SalesManagement.BusinessLogic.Interfaces.Repository;
@@ -9,6 +11,7 @@ using SalesManagement.BusinessLogic.Interfaces.Service;
 using SalesManagement.BusinessLogic.Result;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,7 +84,7 @@ namespace SalesManagement.BusinessLogic.Services
             int nextNumber = 1;
             if (!string.IsNullOrEmpty(latestCode) && latestCode.Length >= 14)
             {
-                string lastNumberStr = latestCode.Substring(8); // lấy 6 số cuối
+                string lastNumberStr = latestCode.Substring(8); 
                 if (int.TryParse(lastNumberStr, out int lastNumber))
                 {
                     nextNumber = lastNumber + 1;
@@ -106,6 +109,44 @@ namespace SalesManagement.BusinessLogic.Services
             return new PaginationResult<CustomerDto>(pagedData, page, pageSize, totalRecords);
 
 
+        }
+
+        public async Task<BaseResult<List<Customer>>> ImportCustomers(Stream stream)
+        {
+           
+
+            var importedCustomers = new List<Customer>();
+
+            using (var package = new ExcelPackage(stream))
+            {
+                var worksheet = package.Workbook.Worksheets[0];
+
+                int rowCount = worksheet.Dimension.Rows;
+
+                for (int row = 2; row <= rowCount; row++) 
+                {
+                    string fullName = worksheet.Cells[row, 3].Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(fullName))
+                        continue; 
+
+                    var customerDto = new ImportCustomer
+                    {
+                        CustomerTypeId = worksheet.Cells[row, 1].Text?.Trim(),
+                        CustomerCode = worksheet.Cells[row, 2].Text?.Trim(),
+                        FullName = fullName,
+                        CompanyName = worksheet.Cells[row, 4].Text?.Trim(),
+                        PhoneNumber = worksheet.Cells[row, 5].Text?.Trim(),
+                        TaxCode = worksheet.Cells[row, 6].Text?.Trim(),
+                    };
+
+                    var customer = Mapper.Map<Customer>(customerDto);
+
+                    _customerRepo.Insert(customer);
+                    importedCustomers.Add(customer);
+                }
+            }
+
+            return GetBaseResult(CodeMessage._200, importedCustomers);
         }
     }
 }

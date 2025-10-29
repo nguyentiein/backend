@@ -36,7 +36,7 @@ namespace SalesManagement.DataAccess.Repositories
                 .Where(p => p.Name.ToLower() != "id" && p.GetValue(entity) != null)
                 .ToList();
 
-            // 👉 Chuyển sang snake_case
+          
             var columns = string.Join(", ", props.Select(p => ToSnakeCase(p.Name)));
             var values = string.Join(", ", props.Select(p => $"@{p.Name}"));
 

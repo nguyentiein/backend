@@ -25,6 +25,6 @@ namespace  SalesManagement.BusinessLogic.Core.Entities
         public decimal DebtAmount { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public CustomerType? CustomerType { get; set; }
+        public string ? CustomerTypeName { get; set; }
     }
 }

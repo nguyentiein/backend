@@ -80,5 +80,13 @@ namespace SalesManagement.Api.Controllers
             return result;
         }
 
+        [HttpPost("import")]
+        public async Task<BaseResult<List<Customer>>> ImportCustomer(IFormFile file)
+        {
+            using var stream = file.OpenReadStream();
+            var result = await _customerService.ImportCustomers(stream);
+            return result;
+        }
+
     }
 }

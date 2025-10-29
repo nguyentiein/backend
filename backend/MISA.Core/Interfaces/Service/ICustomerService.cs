@@ -20,5 +20,6 @@ namespace SalesManagement.BusinessLogic.Interfaces.Service
         Task<BaseResult<List<CustomerDto>>> GetCustomerByCustomerCode(string customerCode);
         Task<BaseResult<string>> GenerateCustomerCode();
         Task<PaginationResult<CustomerDto>> FilterCustomers(string? keyword);
+        Task<BaseResult<List<Customer>>> ImportCustomers(Stream stream);
     }
 }
