@@ -83,6 +83,12 @@ getListCustomer(): Observable<any> {
   );
 }
 
+uploadExcel(formData: FormData): Observable<any> {
+  return this.http.post('https://localhost:7185/api/v1/Customers/import', formData);
+}
+
+
+
 
 }
 export interface Customer {

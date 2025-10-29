@@ -14,7 +14,10 @@
     </div>
 
     <button class="btn btn-primary" [routerLink]="['/create-customer']"><i class="bi bi-plus-lg"></i> Thêm</button>
-    <button><i class="bi bi-file-earmark-excel"></i> Nhập từ Excel</button>
+     <button (click)="onImportExcel()">
+    <i class="bi bi-file-earmark-excel"></i> Nhập từ Excel
+    </button>
+
         <div class="icon-box">
    <i class="bi bi-three-dots"></i>
         </div>
