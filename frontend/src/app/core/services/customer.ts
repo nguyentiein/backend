@@ -12,23 +12,13 @@ export class Customer extends ApiService{
     constructor(protected override http: HttpClient) {
        super(http);
     }
-getListCustomer(): Observable<any> {
+getListCustomer(page: number, pageSize: number): Observable<any> {
   const url = `${environment.apiUrl}/api/v1/Customers`;
+  const params = { page: page, pageSize: pageSize };
 
-  return this.http.get<DataResponse<Customer>>(url).pipe(
-    map(response => {
-      if (!response || !Array.isArray(response.data)) {
-        console.error('Invalid API response:', response);
-        return [];
-      }
-
-      return response.data.map(cust => ({
-        ...cust,
-        Products: Array.isArray(cust.Products) ? cust.Products : []
-      }));
-    })
-  );
+  return this.http.get<any>(url, { params });
 }
+
 
 
   getCustomerById(id: string): Observable<Customer> {
