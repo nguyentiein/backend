@@ -92,6 +92,20 @@ namespace SalesManagement.BusinessLogic.Services
             return GetBaseResult(CodeMessage._200, newCode);
         }
 
+        public async Task<PaginationResult<CustomerDto>> FilterCustomers(string? keyword)
+        {
+            int page = 1;
+            int pageSize = 2;
+            var customers = _customerRepo.FilterCustomers(keyword);
+            var totalRecords = customers.Count;
+            var pagedData = customers
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
 
+            return new PaginationResult<CustomerDto>(pagedData, page, pageSize, totalRecords);
+
+
+        }
     }
 }

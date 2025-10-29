@@ -9,6 +9,7 @@ using MySqlConnector;
 using Microsoft.Extensions.Configuration;
 using SalesManagement.BusinessLogic.Interfaces.Repository;
 using SalesManagement.BusinessLogic.Dtos;
+using SalesManagement.BusinessLogic.Result;
 
 
 namespace SalesManagement.DataAccess.Repositories
@@ -252,6 +253,49 @@ ORDER BY
                        LIMIT 1";
 
             return connection.QueryFirstOrDefault<string>(sql, new { Prefix = prefix + "%" });
+        }
+
+        public List<CustomerDto> FilterCustomers(string? keyword)
+        {
+            using var connection = new MySqlConnection(connectionString);
+
+            var sql = @"
+SELECT 
+    ct.customer_type_name AS CustomerType,
+    c.customer_code AS CustomerCode,
+    c.full_name AS FullName,
+    c.company_name AS CompanyName,
+    c.phone_number AS PhoneNumber,
+    MAX(cp.purchase_date) AS LatestPurchaseDate,
+    GROUP_CONCAT(DISTINCT p.product_code ORDER BY p.product_code SEPARATOR ', ') AS PurchasedProductCodes,
+    GROUP_CONCAT(DISTINCT p.product_name ORDER BY p.product_name SEPARATOR ', ') AS PurchasedProductNames,
+    GROUP_CONCAT(DISTINCT sa.shipping_address ORDER BY sa.created_date SEPARATOR ' | ') AS ShippingAddresses
+FROM customer c
+LEFT JOIN customer_type ct ON c.customer_type_id = ct.customer_type_id
+LEFT JOIN customer_purchase cp ON c.customer_id = cp.customer_id
+LEFT JOIN purchase_item pi ON cp.purchase_id = pi.purchase_id
+LEFT JOIN product p ON pi.product_id = p.product_id
+LEFT JOIN shipping_address sa ON c.customer_id = sa.customer_id
+WHERE c.is_active = 1
+  AND (
+        @keyword IS NULL 
+        OR c.full_name LIKE CONCAT('%', @keyword, '%')
+        OR c.email LIKE CONCAT('%', @keyword, '%')
+        OR c.phone_number LIKE CONCAT('%', @keyword, '%')
+      )
+GROUP BY 
+    c.customer_id, 
+    ct.customer_type_name, 
+    c.customer_code, 
+    c.full_name, 
+    c.company_name, 
+    c.phone_number
+ORDER BY 
+    c.created_date DESC;
+";
+
+            var result = connection.Query<CustomerDto>(sql, new { keyword }).ToList();
+            return result;
         }
 
     }
