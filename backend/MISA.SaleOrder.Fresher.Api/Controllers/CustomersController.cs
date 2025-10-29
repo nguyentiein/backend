@@ -27,9 +27,9 @@ namespace SalesManagement.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<BaseResult<List<CustomerDto>>> GetAllCustomer()
+        public async Task<BaseResult<List<CustomerDto>>> GetAllCustomer(int page, int pageSize)
         {
-            var result = await _customerService.GetCustomers();
+            var result = await _customerService.GetCustomers(page,pageSize);
             return result;
         }
 

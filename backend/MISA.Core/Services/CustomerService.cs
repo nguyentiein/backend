@@ -28,10 +28,9 @@ namespace SalesManagement.BusinessLogic.Services
             _customerRepo = customerRepo;
         }
 
-        public async Task<PaginationResult<CustomerDto>> GetCustomers()
+        public async Task<PaginationResult<CustomerDto>> GetCustomers(int page ,int pageSize)
         {
-            int page = 1;
-            int pageSize = 2;
+         
             var customers = _customerRepo.GetCustomers();
             var totalRecords = customers.Count;
             var pagedData = customers

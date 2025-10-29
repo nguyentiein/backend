@@ -13,7 +13,7 @@ namespace SalesManagement.BusinessLogic.Interfaces.Service
     public interface ICustomerService
     {
 
-        Task<PaginationResult<CustomerDto>> GetCustomers();
+        Task<PaginationResult<CustomerDto>> GetCustomers(int page, int pageSize);
         Task<BaseResult<Customer>> InsertCustomer(Customer customer);
         Task<BaseResult<Customer>> UpdateCustomer(Customer customer,string id);
         Task<BaseResult<Customer>> DeleteCustomer(string  customerCode);

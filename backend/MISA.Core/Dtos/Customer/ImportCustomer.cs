@@ -10,7 +10,6 @@ namespace SalesManagement.BusinessLogic.Dtos.Customer
     public class ImportCustomer
     {
         public string? CustomerTypeId { get; set; }
-        public string? CustomerType { get; set; }
         public string? CustomerCode { get; set; }
         [StringLength(128, ErrorMessage = "FullName cannot exceed 128 characters.")]
         public string? FullName { get; set; }
