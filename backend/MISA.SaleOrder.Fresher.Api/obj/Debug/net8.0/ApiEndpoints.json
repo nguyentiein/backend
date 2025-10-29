@@ -1,0 +1,171 @@
+[
+  {
+    "ContainingType": "SalesManagement.Api.Controllers.CustomersController",
+    "Method": "GetAllCustomer",
+    "RelativePath": "api/v1/Customers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "SalesManagement.BusinessLogic.Result.BaseResult\u00601[[System.Collections.Generic.List\u00601[[SalesManagement.BusinessLogic.Dtos.CustomerDto, SalesManagement.BusinessLogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SalesManagement.Api.Controllers.CustomersController",
+    "Method": "InsertCustomer",
+    "RelativePath": "api/v1/Customers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "SalesManagement.BusinessLogic.Dtos.Customer.CreateCustomer",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SalesManagement.BusinessLogic.Result.BaseResult\u00601[[SalesManagement.BusinessLogic.Core.Entities.Customer, SalesManagement.BusinessLogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SalesManagement.Api.Controllers.CustomersController",
+    "Method": "GetCustomerByCustomerCode",
+    "RelativePath": "api/v1/Customers/{customerCode}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerCode",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SalesManagement.BusinessLogic.Result.BaseResult\u00601[[System.Collections.Generic.List\u00601[[SalesManagement.BusinessLogic.Dtos.CustomerDto, SalesManagement.BusinessLogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SalesManagement.Api.Controllers.CustomersController",
+    "Method": "DeleteCustomer",
+    "RelativePath": "api/v1/Customers/{customerCode}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerCode",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SalesManagement.BusinessLogic.Result.BaseResult\u00601[[SalesManagement.BusinessLogic.Core.Entities.Customer, SalesManagement.BusinessLogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SalesManagement.Api.Controllers.CustomersController",
+    "Method": "UpdateCustomer",
+    "RelativePath": "api/v1/Customers/{id}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateRequest",
+        "Type": "SalesManagement.BusinessLogic.Dtos.Customer.CreateCustomer",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SalesManagement.BusinessLogic.Result.BaseResult\u00601[[SalesManagement.BusinessLogic.Core.Entities.Customer, SalesManagement.BusinessLogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SalesManagement.Api.Controllers.CustomersController",
+    "Method": "GenerateCustomerCode",
+    "RelativePath": "api/v1/Customers/GenerateCustomerCode",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "SalesManagement.BusinessLogic.Result.BaseResult\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SalesManagement.Api.Controllers.CustomerTypeController",
+    "Method": "GetAllCustomer",
+    "RelativePath": "api/v1/CustomerType",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "SalesManagement.BusinessLogic.Result.BaseResult\u00601[[System.Collections.Generic.List\u00601[[SalesManagement.BusinessLogic.Entities.CustomerType, SalesManagement.BusinessLogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  }
+]

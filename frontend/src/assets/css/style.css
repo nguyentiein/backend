@@ -1,0 +1,170 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background-color: #f7f9fb;
+  color: #333;
+}
+
+.crm-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Header */
+.crm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  padding: 10px 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.left-group {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* khoảng cách giữa logo và menu */
+}
+.crm-header .logo {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.menu a {
+  margin: 0 8px;
+  text-decoration: none;
+  color: #333;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+.menu a.active {
+  background-color: #e6f0ff;
+  color: #2563eb;
+}
+
+.user-avatar {
+  display: flex;
+  justify-content: flex-end;
+  width: 32px;
+  height: 32px;
+  background: url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png') center/cover no-repeat;
+  border-radius: 50%;
+}
+
+
+
+.icon-box {
+  width: 29px;
+  height: 29px;
+  display: flex;               /* căn giữa */
+  align-items: center;         /* căn giữa theo trục dọc */
+  justify-content: center;     /* căn giữa theo trục ngang */
+  border: 1px solid #a8b8ff;   /* viền xanh tím nhạt */
+  border-radius: 6px;          /* bo nhẹ các góc */
+  background: #f8faff;         /* nền hơi xanh nhạt */
+  color: #2563eb;              /* màu icon xanh đậm */
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+/* Hiệu ứng hover */
+.icon-box:hover {
+  background: #e6f0ff;        /* sáng hơn khi hover */
+  border-color: #2563eb;
+}
+
+/* Table */
+.table-wrapper {
+  flex: 1;
+  overflow-y: auto;       
+  overflow-x: auto;      
+  background: white;
+  margin: 10px 20px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  white-space: nowrap; 
+}
+
+table {
+  flex: 1;
+  overflow-y: auto;       
+  overflow-x: auto;      
+  background: white;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #f3f6fb;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+tr:hover {
+  background-color: #f9fbff;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 10px 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;   /* canh giữa theo chiều dọc */
+  gap: 10px;             /* khoảng cách giữa select và p */
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;       /* Căn giữa theo chiều dọc */
+  justify-content: flex-end; /* Căn sang phải nếu muốn */
+  gap: 16px;                 /* Khoảng cách giữa các phần tử */
+  flex-wrap: nowrap;         /* Ngăn xuống dòng */
+}
+
+.footer-pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;                 /* Khoảng cách giữa dropdown, range, và nút */
+  flex-wrap: nowrap;         /* Không cho xuống dòng */
+}
+
+.records-per-page select {
+  min-width: 170px;
+  height: 30px;
+  font-size: 13px;
+  padding: 2px 6px;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pagination-controls .btn {
+  padding: 2px 6px;
+  font-size: 13px;
+}
+
+.pagination-controls input[type="number"] {
+  width: 60px;
+  height: 28px;
+  text-align: center;
+  font-size: 13px;
+}

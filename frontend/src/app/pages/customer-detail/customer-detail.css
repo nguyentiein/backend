@@ -1,0 +1,94 @@
+.customer-form-container {
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-actions button {
+  margin-left: 8px;
+}
+
+.photo-section {
+  margin-bottom: 20px;
+}
+
+.photo-placeholder img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #f3f3f3;
+}
+
+.customer-form {
+  margin-top: 10px;
+}
+
+.form-grid {
+  display: flex;
+  gap: 24px;
+}
+
+.form-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+.required {
+  color: red;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #e4dddd;
+  padding: 10px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+.toolbar-left {
+  display: flex;
+  align-items: center;   /* canh giữa theo chiều dọc */
+  gap: 10px;             /* khoảng cách giữa select và p */
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;   /* canh giữa theo chiều dọc */
+  gap: 10px;             /* khoảng cách giữa select và p */
+}
+
+.toolbar select,
+.toolbar input {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

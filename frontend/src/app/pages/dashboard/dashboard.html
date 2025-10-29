@@ -1,0 +1,76 @@
+<app-toolbar></app-toolbar>
+<div class="table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th><input type="checkbox" /></th>
+        <th>Loại khách hàng</th>
+        <th>Mã khách hàng</th>
+        <th>Tên khách hàng</th>
+        <th>Mã số thuế</th>
+        <th>Địa chỉ (Giao hàng)</th>
+        <th>Điện thoại</th>
+        <th>Ngày mua hàng gần nhất</th>
+        <th>Hàng hóa đã mua</th>
+        <th>Tên hàng hóa đã mua</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of pagedCustomers"  (dblclick)="onEditCustomer(customer)">
+        <td><input type="checkbox" /></td>
+        <td>{{ customer?.customerType || '-' }}</td>
+        <td>{{ customer?.customerCode || '-' }}</td>
+        <td>{{ customer?.fullName || '-' }}</td>
+        <td>{{ customer?.companyName || '-' }}</td>
+        <td>{{ customer?.shippingAddresses || '-' }}</td>
+        <td>{{ customer?.phoneNumber || '-' }}</td>
+        <td>{{ customer?.latestPurchaseDate ? (customer.latestPurchaseDate | date:'dd/MM/yyyy') : '-' }}</td>
+        <td>{{ customer?.purchasedProductCodes || '-' }}</td>
+        <td>{{ customer?.purchasedProductNames || '-' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<footer class="footer">
+  <div class="footer-left">
+    <div>Tổng số: <strong>{{ totalRecords }}</strong></div>
+    <div>Trang {{ currentPage }}/{{ totalPages }}</div>
+  </div>
+
+  <div class="footer-right">
+    <div class="footer-pagination d-flex align-items-center gap-3">
+      <div class="records-per-page">
+        <select (change)="changePageSize($event)" class="form-select form-select-sm">
+          <option [value]="10">10 bản ghi/trang</option>
+          <option [value]="25">25 bản ghi/trang</option>
+          <option [value]="50">50 bản ghi/trang</option>
+          <option [value]="100">100 bản ghi/trang</option>
+        </select>
+      </div>
+
+      <div class="pagination-controls d-flex align-items-center">
+        <button class="btn btn-sm btn-outline-secondary me-1" (click)="firstPage()" [disabled]="currentPage === 1" title="Đầu">
+          <i class="bi bi-chevron-double-left"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-secondary me-2" (click)="previousPage()" [disabled]="currentPage === 1" title="Trước">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+
+        <span class="small">
+          {{ (currentPage - 1) * pageSize + 1 }} -
+          {{
+            Math.min(currentPage * pageSize, totalRecords)
+          }}
+        </span>
+
+        <button class="btn btn-sm btn-outline-secondary ms-2 me-1" (click)="nextPage()" [disabled]="currentPage === totalPages" title="Sau">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-secondary" (click)="lastPage()" [disabled]="currentPage === totalPages" title="Cuối">
+          <i class="bi bi-chevron-double-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</footer>
