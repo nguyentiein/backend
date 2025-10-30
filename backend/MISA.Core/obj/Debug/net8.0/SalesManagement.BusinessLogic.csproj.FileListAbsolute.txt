@@ -24,3 +24,16 @@ E:\1.Lab\check\MISA.SaleOrder.Fresher\backend\MISA.Core\obj\Debug\net8.0\SalesMa
 E:\1.Lab\check\MISA.SaleOrder.Fresher\backend\MISA.Core\obj\Debug\net8.0\refint\SalesManagement.BusinessLogic.dll
 E:\1.Lab\check\MISA.SaleOrder.Fresher\backend\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.pdb
 E:\1.Lab\check\MISA.SaleOrder.Fresher\backend\MISA.Core\obj\Debug\net8.0\ref\SalesManagement.BusinessLogic.dll
+E:\BE-FE\backend\backend\MISA.Core\bin\Debug\net8.0\SalesManagement.BusinessLogic.deps.json
+E:\BE-FE\backend\backend\MISA.Core\bin\Debug\net8.0\SalesManagement.BusinessLogic.dll
+E:\BE-FE\backend\backend\MISA.Core\bin\Debug\net8.0\SalesManagement.BusinessLogic.pdb
+E:\BE-FE\backend\backend\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.csproj.AssemblyReference.cache
+E:\BE-FE\backend\backend\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+E:\BE-FE\backend\backend\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.AssemblyInfoInputs.cache
+E:\BE-FE\backend\backend\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.AssemblyInfo.cs
+E:\BE-FE\backend\backend\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.csproj.CoreCompileInputs.cache
+E:\BE-FE\backend\backend\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.sourcelink.json
+E:\BE-FE\backend\backend\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.dll
+E:\BE-FE\backend\backend\MISA.Core\obj\Debug\net8.0\refint\SalesManagement.BusinessLogic.dll
+E:\BE-FE\backend\backend\MISA.Core\obj\Debug\net8.0\SalesManagement.BusinessLogic.pdb
+E:\BE-FE\backend\backend\MISA.Core\obj\Debug\net8.0\ref\SalesManagement.BusinessLogic.dll

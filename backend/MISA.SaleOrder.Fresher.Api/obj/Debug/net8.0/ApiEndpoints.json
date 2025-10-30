@@ -6,7 +6,18 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": [
       {
         "Type": "SalesManagement.BusinessLogic.Result.BaseResult\u00601[[System.Collections.Generic.List\u00601[[SalesManagement.BusinessLogic.Dtos.CustomerDto, SalesManagement.BusinessLogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
@@ -130,6 +141,32 @@
   },
   {
     "ContainingType": "SalesManagement.Api.Controllers.CustomersController",
+    "Method": "FilterCustomers",
+    "RelativePath": "api/v1/Customers/filter",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "keyword",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SalesManagement.BusinessLogic.Result.BaseResult\u00601[[System.Collections.Generic.List\u00601[[SalesManagement.BusinessLogic.Dtos.CustomerDto, SalesManagement.BusinessLogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SalesManagement.Api.Controllers.CustomersController",
     "Method": "GenerateCustomerCode",
     "RelativePath": "api/v1/Customers/GenerateCustomerCode",
     "HttpMethod": "GET",
@@ -139,6 +176,32 @@
     "ReturnTypes": [
       {
         "Type": "SalesManagement.BusinessLogic.Result.BaseResult\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SalesManagement.Api.Controllers.CustomersController",
+    "Method": "ImportCustomer",
+    "RelativePath": "api/v1/Customers/import",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SalesManagement.BusinessLogic.Result.BaseResult\u00601[[System.Collections.Generic.List\u00601[[SalesManagement.BusinessLogic.Core.Entities.Customer, SalesManagement.BusinessLogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

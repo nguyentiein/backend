@@ -1,51 +1,47 @@
-﻿using  SalesManagement.BusinessLogic.Core.Entities;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using MySqlConnector;
+using SalesManagement.BusinessLogic.Core.Entities;
+using SalesManagement.BusinessLogic.Dtos;
+using SalesManagement.BusinessLogic.Interfaces.Repository;
+using SalesManagement.BusinessLogic.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dapper;
-using MySqlConnector;
-using Microsoft.Extensions.Configuration;
-using SalesManagement.BusinessLogic.Interfaces.Repository;
-using SalesManagement.BusinessLogic.Dtos;
-using SalesManagement.BusinessLogic.Result;
-
 
 namespace SalesManagement.DataAccess.Repositories
 {
-    public class CustomerRepo :BaseRepo<Customer>, ICustomerRepo
+    public class CustomerRepo : BaseRepo<Customer>, ICustomerRepo
     {
-        public CustomerRepo(IConfiguration config): base (config)
+        public CustomerRepo(IConfiguration config) : base(config)
         {
 
         }
 
-
         public Customer RemoveCustomer(string customerCode)
         {
-            using (var connection = new MySqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
-              
-                var checkSql = "SELECT COUNT(*) FROM customer WHERE customer_code = @CustomerCode AND is_active = TRUE";
+                var checkSql = "SELECT COUNT(*) FROM customer WHERE customer_code = @CustomerCode AND is_active = 1";
                 var isExist = connection.ExecuteScalar<int>(checkSql, new { CustomerCode = customerCode }) > 0;
 
                 if (!isExist)
                     throw new Exception($"Customer with code {customerCode} not found or already inactive");
 
-      
                 var updateSql = @"
-            UPDATE customer
-            SET is_active = FALSE,
-                modified_date = @ModifiedDate
-            WHERE customer_code = @CustomerCode;
-        ";
+                    UPDATE customer
+                    SET is_active = 0,
+                        modified_date = GETDATE()
+                    WHERE customer_code = @CustomerCode;
+                ";
 
-                connection.Execute(updateSql, new { CustomerCode = customerCode, ModifiedDate = DateTime.Now });
+                connection.Execute(updateSql, new { CustomerCode = customerCode });
 
-                // 3️⃣ Trả về bản ghi sau khi "xóa mềm"
                 var selectSql = "SELECT * FROM customer WHERE customer_code = @CustomerCode";
                 var removedCustomer = connection.Query(selectSql, new { CustomerCode = customerCode })
                                                 .Select(row => new Customer
@@ -62,7 +58,6 @@ namespace SalesManagement.DataAccess.Repositories
                                                     ModifiedDate = row.modified_date,
                                                     DebtAmount = row.debt_amount,
                                                     LatestPurchaseDate = row.latest_purchase_date,
-                                                 
                                                 })
                                                 .FirstOrDefault();
 
@@ -70,16 +65,12 @@ namespace SalesManagement.DataAccess.Repositories
             }
         }
 
-
-
-
-
-
         public Customer UpdateCustomer(string customerCode, Customer customer)
         {
-            using (var connection = new MySqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
+
                 var checkSql = "SELECT COUNT(*) FROM customer WHERE customer_code = @CustomerCode";
                 var isExist = connection.ExecuteScalar<int>(checkSql, new { CustomerCode = customerCode }) > 0;
 
@@ -125,20 +116,20 @@ namespace SalesManagement.DataAccess.Repositories
                     parameters.Add("@CustomerTypeId", customer.CustomerTypeId);
                 }
 
-                updates.Add("modified_date = @ModifiedDate");
-                parameters.Add("@ModifiedDate", DateTime.Now);
+                updates.Add("modified_date = GETDATE()");
 
                 if (!updates.Any())
                     throw new Exception("No fields to update");
 
                 var sql = $@"
-            UPDATE customer
-            SET {string.Join(", ", updates)}
-            WHERE customer_code = @CustomerCode;
-        ";
+                    UPDATE customer
+                    SET {string.Join(", ", updates)}
+                    WHERE customer_code = @CustomerCode;
+                ";
 
                 parameters.Add("@CustomerCode", customerCode);
                 connection.Execute(sql, parameters);
+
                 var selectSql = "SELECT * FROM customer WHERE customer_code = @CustomerCode";
                 var updatedCustomer = connection.Query(selectSql, new { CustomerCode = customerCode })
                                                 .Select(row => new Customer
@@ -162,7 +153,6 @@ namespace SalesManagement.DataAccess.Repositories
             }
         }
 
-
         public List<CustomerDto> GetCustomers()
         {
             string sqlCommand = @"
@@ -173,15 +163,21 @@ SELECT
     c.company_name AS CompanyName,
     c.phone_number AS PhoneNumber,
     MAX(cp.purchase_date) AS LatestPurchaseDate,
-    GROUP_CONCAT(DISTINCT p.product_code ORDER BY p.product_code SEPARATOR ', ') AS PurchasedProductCodes,
-    GROUP_CONCAT(DISTINCT p.product_name ORDER BY p.product_name SEPARATOR ', ') AS PurchasedProductNames,
-    GROUP_CONCAT(DISTINCT sa.shipping_address ORDER BY sa.created_date SEPARATOR ' | ') AS ShippingAddresses
+    STRING_AGG(pu.product_code, ', ') AS PurchasedProductCodes,
+    STRING_AGG(pu.product_name, ', ') AS PurchasedProductNames,
+    STRING_AGG(sa.shipping_address, ' | ') AS ShippingAddresses
 FROM customer c
 LEFT JOIN customer_type ct ON c.customer_type_id = ct.customer_type_id
 LEFT JOIN customer_purchase cp ON c.customer_id = cp.customer_id
-LEFT JOIN purchase_item pi ON cp.purchase_id = pi.purchase_id
-LEFT JOIN product p ON pi.product_id = p.product_id
-LEFT JOIN shipping_address sa ON c.customer_id = sa.customer_id
+LEFT JOIN (
+    SELECT DISTINCT pi.purchase_id, p.product_code, p.product_name
+    FROM purchase_item pi
+    JOIN product p ON pi.product_id = p.product_id
+) pu ON cp.purchase_id = pu.purchase_id
+LEFT JOIN (
+    SELECT DISTINCT customer_id, shipping_address
+    FROM shipping_address
+) sa ON c.customer_id = sa.customer_id
 WHERE c.is_active = 1
 GROUP BY 
     c.customer_id, 
@@ -191,16 +187,14 @@ GROUP BY
     c.company_name, 
     c.phone_number
 ORDER BY 
-    c.created_date DESC
-;
+    c.customer_id DESC;
 ";
 
-            using (var connection = new MySqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 return connection.Query<CustomerDto>(sqlCommand).ToList();
             }
         }
-
 
         public List<CustomerDto> GetCustomersByCustomerCode(string customerCode)
         {
@@ -212,9 +206,9 @@ SELECT
     c.company_name AS CompanyName,
     c.phone_number AS PhoneNumber,
     MAX(cp.purchase_date) AS LatestPurchaseDate,
-    GROUP_CONCAT(DISTINCT p.product_code ORDER BY p.product_code SEPARATOR ', ') AS PurchasedProductCodes,
-    GROUP_CONCAT(DISTINCT p.product_name ORDER BY p.product_name SEPARATOR ', ') AS PurchasedProductNames,
-    GROUP_CONCAT(DISTINCT sa.shipping_address ORDER BY sa.created_date SEPARATOR ' | ') AS ShippingAddresses
+    STRING_AGG(DISTINCT p.product_code, ', ') AS PurchasedProductCodes,
+    STRING_AGG(DISTINCT p.product_name, ', ') AS PurchasedProductNames,
+    STRING_AGG(DISTINCT sa.shipping_address, ' | ') AS ShippingAddresses
 FROM customer c
 LEFT JOIN customer_type ct ON c.customer_type_id = ct.customer_type_id
 LEFT JOIN customer_purchase cp ON c.customer_id = cp.customer_id
@@ -234,30 +228,30 @@ ORDER BY
     c.created_date DESC;
 ";
 
-            using (var connection = new MySqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 return connection.Query<CustomerDto>(sqlCommand, new { CustomerCode = customerCode }).ToList();
             }
         }
 
-
         public string GetLatestCustomerCode(string prefix)
         {
-            using var connection = new MySqlConnection(connectionString);
+            using var connection = new SqlConnection(connectionString);
             connection.Open();
 
-            string sql = @"SELECT customer_code 
-                       FROM customer 
-                       WHERE customer_code LIKE @Prefix 
-                       ORDER BY customer_code DESC 
-                       LIMIT 1";
+            string sql = @"
+                SELECT TOP 1 customer_code 
+                FROM customer 
+                WHERE customer_code LIKE @Prefix 
+                ORDER BY customer_code DESC;
+            ";
 
             return connection.QueryFirstOrDefault<string>(sql, new { Prefix = prefix + "%" });
         }
 
         public List<CustomerDto> FilterCustomers(string? keyword)
         {
-            using var connection = new MySqlConnection(connectionString);
+            using var connection = new SqlConnection(connectionString);
 
             var sql = @"
 SELECT 
@@ -267,9 +261,9 @@ SELECT
     c.company_name AS CompanyName,
     c.phone_number AS PhoneNumber,
     MAX(cp.purchase_date) AS LatestPurchaseDate,
-    GROUP_CONCAT(DISTINCT p.product_code ORDER BY p.product_code SEPARATOR ', ') AS PurchasedProductCodes,
-    GROUP_CONCAT(DISTINCT p.product_name ORDER BY p.product_name SEPARATOR ', ') AS PurchasedProductNames,
-    GROUP_CONCAT(DISTINCT sa.shipping_address ORDER BY sa.created_date SEPARATOR ' | ') AS ShippingAddresses
+    STRING_AGG(DISTINCT p.product_code, ', ') AS PurchasedProductCodes,
+    STRING_AGG(DISTINCT p.product_name, ', ') AS PurchasedProductNames,
+    STRING_AGG(DISTINCT sa.shipping_address, ' | ') AS ShippingAddresses
 FROM customer c
 LEFT JOIN customer_type ct ON c.customer_type_id = ct.customer_type_id
 LEFT JOIN customer_purchase cp ON c.customer_id = cp.customer_id
@@ -279,9 +273,9 @@ LEFT JOIN shipping_address sa ON c.customer_id = sa.customer_id
 WHERE c.is_active = 1
   AND (
         @keyword IS NULL 
-        OR c.full_name LIKE CONCAT('%', @keyword, '%')
-        OR c.email LIKE CONCAT('%', @keyword, '%')
-        OR c.phone_number LIKE CONCAT('%', @keyword, '%')
+        OR c.full_name LIKE '%' + @keyword + '%'
+        OR c.email LIKE '%' + @keyword + '%'
+        OR c.phone_number LIKE '%' + @keyword + '%'
       )
 GROUP BY 
     c.customer_id, 
@@ -297,6 +291,5 @@ ORDER BY
             var result = connection.Query<CustomerDto>(sql, new { keyword }).ToList();
             return result;
         }
-
     }
 }
