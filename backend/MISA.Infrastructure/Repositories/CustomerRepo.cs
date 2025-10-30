@@ -261,15 +261,44 @@ SELECT
     c.company_name AS CompanyName,
     c.phone_number AS PhoneNumber,
     MAX(cp.purchase_date) AS LatestPurchaseDate,
-    STRING_AGG(DISTINCT p.product_code, ', ') AS PurchasedProductCodes,
-    STRING_AGG(DISTINCT p.product_name, ', ') AS PurchasedProductNames,
-    STRING_AGG(DISTINCT sa.shipping_address, ' | ') AS ShippingAddresses
+
+    -- ✅ Lấy danh sách product_code không trùng
+    (
+        SELECT STRING_AGG(p2.product_code, ', ')
+        FROM (
+            SELECT DISTINCT p.product_code
+            FROM customer_purchase cp2
+            INNER JOIN purchase_item pi2 ON cp2.purchase_id = pi2.purchase_id
+            INNER JOIN product p ON pi2.product_id = p.product_id
+            WHERE cp2.customer_id = c.customer_id
+        ) AS p2
+    ) AS PurchasedProductCodes,
+
+    -- ✅ Lấy danh sách product_name không trùng
+    (
+        SELECT STRING_AGG(p3.product_name, ', ')
+        FROM (
+            SELECT DISTINCT p.product_name
+            FROM customer_purchase cp3
+            INNER JOIN purchase_item pi3 ON cp3.purchase_id = pi3.purchase_id
+            INNER JOIN product p ON pi3.product_id = p.product_id
+            WHERE cp3.customer_id = c.customer_id
+        ) AS p3
+    ) AS PurchasedProductNames,
+
+    -- ✅ Lấy danh sách địa chỉ giao hàng không trùng
+    (
+        SELECT STRING_AGG(sa2.shipping_address, ' | ')
+        FROM (
+            SELECT DISTINCT sa.shipping_address
+            FROM shipping_address sa
+            WHERE sa.customer_id = c.customer_id
+        ) AS sa2
+    ) AS ShippingAddresses
+
 FROM customer c
 LEFT JOIN customer_type ct ON c.customer_type_id = ct.customer_type_id
 LEFT JOIN customer_purchase cp ON c.customer_id = cp.customer_id
-LEFT JOIN purchase_item pi ON cp.purchase_id = pi.purchase_id
-LEFT JOIN product p ON pi.product_id = p.product_id
-LEFT JOIN shipping_address sa ON c.customer_id = sa.customer_id
 WHERE c.is_active = 1
   AND (
         @keyword IS NULL 
@@ -278,14 +307,15 @@ WHERE c.is_active = 1
         OR c.phone_number LIKE '%' + @keyword + '%'
       )
 GROUP BY 
-    c.customer_id, 
     ct.customer_type_name, 
     c.customer_code, 
     c.full_name, 
     c.company_name, 
-    c.phone_number
+    c.phone_number, 
+    c.customer_id
 ORDER BY 
-    c.created_date DESC;
+    MAX(c.created_date) DESC;
+
 ";
 
             var result = connection.Query<CustomerDto>(sql, new { keyword }).ToList();

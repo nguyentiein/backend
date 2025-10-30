@@ -1,4 +1,37 @@
-<app-toolbar></app-toolbar>
+     <div class="toolbar">
+  <div class="toolbar-left">
+    <select>
+      <option>Tất cả khách hàng</option>
+    </select>
+    <p><i class="bi bi-pencil-square"></i> Sửa</p>
+    <i class="bi bi-arrow-clockwise"></i>
+  </div>
+
+ <div class="toolbar-right">
+  <input
+    type="text"
+    [(ngModel)]="keyWord"
+    (ngModelChange)="handleSearchChange($event)"
+    placeholder="Tìm kiếm thông minh"
+  />
+  <div class="icon-box">
+    <i class="bi bi-buildings"></i>
+  </div>
+
+    <button class="btn btn-primary" [routerLink]="['/create-customer']"><i class="bi bi-plus-lg"></i> Thêm</button>
+     <button (click)="onImportExcel()">
+    <i class="bi bi-file-earmark-excel"></i> Nhập từ Excel
+    </button>
+
+        <div class="icon-box">
+   <i class="bi bi-three-dots"></i>
+        </div>
+ <div class="icon-box">
+<i class="bi bi-list"></i>
+ </div>
+    
+  </div>
+</div>
 <div class="table-wrapper">
   <table>
     <thead>

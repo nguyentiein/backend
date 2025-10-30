@@ -18,6 +18,12 @@ getListCustomer(page: number, pageSize: number): Observable<any> {
 
   return this.http.get<any>(url, { params });
 }
+onFilterCustomer(keyword: any): Observable<any> {
+  const url = `${environment.apiUrl}/api/v1/Customers/filter`;
+  const params = { keyword: keyword };
+
+  return this.http.get<any>(url, { params });
+}
 
 
 

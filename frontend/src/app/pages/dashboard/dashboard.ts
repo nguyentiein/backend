@@ -1,114 +1,148 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Toolbar } from '../_component/toolbar/toolbar';
 import { Customer } from '../../core/services/customer';
+import { FormsModule, NgModel } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, Toolbar],
+  imports: [CommonModule,RouterLink,FormsModule],
   templateUrl: './dashboard.html',
-  styleUrls: ['./dashboard.css'], // ✅ phải là styleUrls (có "s")
+  styleUrls: ['./dashboard.css'],
 })
 export class Dashboard implements OnInit {
+  Math = Math; 
+  public keyWord = '';
   public listCustomer: any[] = [];
   public pagedCustomers: any[] = [];
-  Math = Math;
 
-  // 🔢 Phân trang
   public currentPage = 1;
   public pageSize = 10;
   public totalRecords = 0;
   public totalPages = 0;
-
+ private searchSubject = new Subject<string>();
   constructor(
     private customerService: Customer,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    
     this.onGetData();
+     this.searchSubject
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((keyword) => {
+        this.searchCustomers(keyword);
+      });
+
+    // Load mặc định
+    this.searchCustomers('');
+  
+  }
+handleSearchChange(value: string) {
+    this.searchSubject.next(value);
   }
 
-  // ✅ Lấy dữ liệu có phân trang
- onGetData(): void {
-  this.customerService.getListCustomer(this.currentPage, this.pageSize).subscribe({
-    next: (response) => {
-      console.log('API trả về:', response); // 👀 debug log
-      
-      // ✅ Lấy mảng khách hàng từ response.data
-      this.listCustomer = response.data ?? [];
-      
-      // ✅ Lấy tổng số bản ghi từ meta
-      this.totalRecords = response.meta?.total ?? this.listCustomer.length;
-      
-      // ✅ Tính lại tổng số trang
-      this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
-      
-      // ✅ Cập nhật danh sách hiển thị
-      this.updatePagedData();
-    },
-    error: (err) => {
-      console.error('Lỗi khi lấy danh sách khách hàng:', err);
-    }
-  });
-}
+  searchCustomers(keyword: string) {
+    this.customerService.onFilterCustomer(keyword).subscribe({
+      next: (res) => {
+        this.listCustomer = res.data;
+        this.pagedCustomers = this.listCustomer;
 
-
-  // ✅ Cập nhật lại dữ liệu hiển thị
-  updatePagedData(): void {
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.pagedCustomers = this.listCustomer.slice(startIndex, endIndex);
+      },
+      error: (err) => {
+        console.error('Error loading customers:', err);
+      },
+    });
+  }
+  onGetData(): void {
+    this.customerService.getListCustomer(this.currentPage, this.pageSize).subscribe({
+      next: (response) => {
+        this.listCustomer = response.data ?? [];
+        this.pagedCustomers = this.listCustomer;
+        this.totalRecords = response.meta?.total ?? 0;
+        this.totalPages = response.meta?.totalPages ?? Math.ceil(this.totalRecords / this.pageSize);
+      },
+      error: (err) => {
+        console.error('Lỗi khi lấy danh sách khách hàng:', err);
+      }
+    });
   }
 
   changePageSize(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     this.pageSize = +value;
-    this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
     this.currentPage = 1;
-    this.updatePagedData();
-  }
-
-  goToPage(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-      this.updatePagedData();
-    }
+    this.onGetData();
   }
 
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.updatePagedData();
+      this.onGetData(); 
     }
   }
 
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      this.updatePagedData();
+      this.onGetData();
     }
   }
 
   firstPage(): void {
-    this.currentPage = 1;
-    this.updatePagedData();
+    if (this.currentPage !== 1) {
+      this.currentPage = 1;
+      this.onGetData();
+    }
   }
 
   lastPage(): void {
-    this.currentPage = this.totalPages;
-    this.updatePagedData();
+    if (this.currentPage !== this.totalPages) {
+      this.currentPage = this.totalPages;
+      this.onGetData();
+    }
   }
 
-  // ✅ Chuyển trang Edit Customer
   onEditCustomer(customer: any): void {
     if (!customer?.customerCode) {
       console.warn('Không có mã khách hàng để sửa');
       return;
     }
-    console.log('Editing customer:', customer);
     this.router.navigate(['/update-customer', customer.customerCode]);
   }
+onImportExcel() {
+    alert('onImportExcel hoạt động!');
+    console.log("ok");
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.xlsx, .xls';
+
+    input.onchange = (event: any) => {
+      const file = event.target.files[0];
+      if (file) {
+        console.log('Đã chọn file:', file.name);
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        this.customerService.uploadExcel(formData).subscribe({
+          next: (res:any) => {
+            console.log('Import thành công:', res);
+            alert('Import Excel thành công!');
+          },
+          error: (err:any) => {
+            console.error('Import thất bại:', err);
+            alert('Import Excel thất bại!');
+          }
+        });
+      }
+    };
+
+    input.click(); 
+  }
 }
+
