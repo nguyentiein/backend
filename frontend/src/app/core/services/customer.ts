@@ -85,7 +85,7 @@ export interface Customer {
   customerType: string;
   customerCode: string;
   fullName: string;
-  companyName?: string;
+  tax?: string;
   shippingAddresses?: string;
   phoneNumber: string;
   latestPurchaseDate?: string;

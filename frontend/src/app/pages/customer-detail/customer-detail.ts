@@ -77,7 +77,7 @@ GenerateCustomerCode() {
             customerCode: customer.customerCode,
             fullName: customer.fullName,
             customerType: customer.customerType,
-            taxCode: customer.taxCode,
+            taxCode: customer.tax,
             companyName: customer.companyName,
             phoneNumber: customer.phoneNumber
           });
