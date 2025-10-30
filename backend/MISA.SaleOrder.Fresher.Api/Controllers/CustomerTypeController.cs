@@ -21,6 +21,14 @@ namespace SalesManagement.Api.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Lấy danh sách tất cả loại khách hàng (Customer Type) trong hệ thống.
+        /// </summary>
+        /// <returns>
+        /// Danh sách các loại khách hàng bao gồm thông tin như mã loại và tên loại.
+        /// </returns>
+        /// <createdby> NVTien - 28.10.2025 </createdby>
+
         [HttpGet]
         public async Task<BaseResult<List<CustomerType>>> GetAllCustomer()
         {

@@ -42,7 +42,6 @@ namespace SalesManagement.BusinessLogic.Services
                 ? ResponseMessage.Values[tempCode].RemoveSpaceCharacter()
                 : message.RemoveSpaceCharacter();
 
-            // Nếu status là Success → trả về data + meta
             if (status == StatusEnum.Success)
             {
                 return new BaseResult<Inner>()
@@ -54,7 +53,6 @@ namespace SalesManagement.BusinessLogic.Services
                 };
             }
 
-            // Nếu status là Failed → trả về error
             return new BaseResult<Inner>()
             {
                 Status = status,

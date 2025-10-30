@@ -23,6 +23,18 @@ namespace SalesManagement.BusinessLogic.Services
             _customerRepo = customerRepo;
         }
 
+        /// <summary>
+        /// Lấy danh sách loại khách hàng có hỗ trợ phân trang.
+        /// </summary>
+        /// <returns>
+        /// Kết quả phân trang chứa danh sách các loại khách hàng,
+        /// bao gồm tổng số bản ghi, số trang và dữ liệu hiển thị.
+        /// </returns>
+        /// <remarks>
+        /// Tạm thời sử dụng giá trị mặc định: page = 1, pageSize = 2.
+        /// Sau này có thể mở rộng để truyền tham số phân trang từ request.
+        /// </remarks>
+        /// <createdby> NVTien - 28.10.2025 </createdby>
         public async Task<PaginationResult<CustomerType>> GetCustomerType()
         {
             int page = 1;
