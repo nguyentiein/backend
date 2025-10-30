@@ -32,19 +32,29 @@ export class Dashboard implements OnInit {
   }
 
   // ✅ Lấy dữ liệu có phân trang
-  onGetData(): void {
-    this.customerService.getListCustomer(this.currentPage, this.pageSize).subscribe({
-      next: (data) => {
-        this.listCustomer = data;
-        this.totalRecords = data.length;
-        this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
-        this.updatePagedData();
-      },
-      error: (err) => {
-        console.error('Lỗi khi lấy danh sách khách hàng:', err);
-      }
-    });
-  }
+ onGetData(): void {
+  this.customerService.getListCustomer(this.currentPage, this.pageSize).subscribe({
+    next: (response) => {
+      console.log('API trả về:', response); // 👀 debug log
+      
+      // ✅ Lấy mảng khách hàng từ response.data
+      this.listCustomer = response.data ?? [];
+      
+      // ✅ Lấy tổng số bản ghi từ meta
+      this.totalRecords = response.meta?.total ?? this.listCustomer.length;
+      
+      // ✅ Tính lại tổng số trang
+      this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+      
+      // ✅ Cập nhật danh sách hiển thị
+      this.updatePagedData();
+    },
+    error: (err) => {
+      console.error('Lỗi khi lấy danh sách khách hàng:', err);
+    }
+  });
+}
+
 
   // ✅ Cập nhật lại dữ liệu hiển thị
   updatePagedData(): void {
