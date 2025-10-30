@@ -74,9 +74,9 @@ namespace SalesManagement.Api.Controllers
         }
 
         [HttpGet("filter")]
-        public async Task<BaseResult<List<CustomerDto>>> FilterCustomers([FromQuery] string? keyword)
+        public async Task<BaseResult<List<CustomerDto>>> FilterCustomers([FromQuery] string? keyword, int page, int pageSize)
         {
-            var result = await _customerService.FilterCustomers(keyword);
+            var result = await _customerService.FilterCustomers(keyword,  page,  pageSize);
             return result;
         }
 

@@ -19,7 +19,7 @@ namespace SalesManagement.BusinessLogic.Interfaces.Service
         Task<BaseResult<Customer>> DeleteCustomer(string  customerCode);
         Task<BaseResult<List<CustomerDto>>> GetCustomerByCustomerCode(string customerCode);
         Task<BaseResult<string>> GenerateCustomerCode();
-        Task<PaginationResult<CustomerDto>> FilterCustomers(string? keyword);
+        Task<PaginationResult<CustomerDto>> FilterCustomers(string? keyword, int page, int pageSize);
         Task<BaseResult<List<Customer>>> ImportCustomers(Stream stream);
     }
 }
