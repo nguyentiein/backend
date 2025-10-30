@@ -14,12 +14,12 @@ namespace SalesManagement.BusinessLogic.Mapper.Customers
         public ModelToResourseProfile() {
 
      CreateMap<CreateCustomer, Customer>()
-    .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
-    .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => DateTime.Now))
-    .ForMember(dest => dest.CustomerTypeId, opt => opt.MapFrom(src => src.CustomerType))
-    .ForMember(dest => dest.CustomerTypeName, opt => opt.Ignore());
+             .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
+             .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => DateTime.Now))
+             .ForMember(dest => dest.CustomerTypeId, opt => opt.MapFrom(src => src.CustomerType))
+             .ForMember(dest => dest.CustomerTypeName, opt => opt.Ignore());
 
-            CreateMap<ImportCustomer, Customer>()
+     CreateMap<ImportCustomer, Customer>()
           .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
           .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => DateTime.Now))
           .ForMember(dest => dest.CustomerTypeId, opt => opt.MapFrom(src => src.CustomerTypeId))
