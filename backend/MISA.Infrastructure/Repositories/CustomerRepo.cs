@@ -170,8 +170,9 @@ SELECT
     ct.customer_type_name AS CustomerType,
     c.customer_code AS CustomerCode,
     c.full_name AS FullName,
-    c.company_name AS CompanyName,
+    c.tax_code AS Tax,
     c.phone_number AS PhoneNumber,
+
     MAX(cp.purchase_date) AS LatestPurchaseDate,
     GROUP_CONCAT(DISTINCT p.product_code ORDER BY p.product_code SEPARATOR ', ') AS PurchasedProductCodes,
     GROUP_CONCAT(DISTINCT p.product_name ORDER BY p.product_name SEPARATOR ', ') AS PurchasedProductNames,
@@ -211,6 +212,7 @@ SELECT
     c.full_name AS FullName,
     c.company_name AS CompanyName,
     c.phone_number AS PhoneNumber,
+    c.tax_code AS Tax,
     MAX(cp.purchase_date) AS LatestPurchaseDate,
     GROUP_CONCAT(DISTINCT p.product_code ORDER BY p.product_code SEPARATOR ', ') AS PurchasedProductCodes,
     GROUP_CONCAT(DISTINCT p.product_name ORDER BY p.product_name SEPARATOR ', ') AS PurchasedProductNames,
@@ -263,6 +265,7 @@ ORDER BY
 SELECT 
     ct.customer_type_name AS CustomerType,
     c.customer_code AS CustomerCode,
+    c.tax_code AS Tax,
     c.full_name AS FullName,
     c.company_name AS CompanyName,
     c.phone_number AS PhoneNumber,

@@ -18,5 +18,6 @@ namespace SalesManagement.BusinessLogic.Dtos
         public DateTime? LatestPurchaseDate { get; set; }
         public string? PurchasedProductCodes { get; set; }
         public string ?PurchasedProductNames { get; set; }
+        public string? Tax { get; set; }
     }
 }
