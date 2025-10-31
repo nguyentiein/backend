@@ -21,7 +21,7 @@ export class Dashboard implements OnInit {
   public pageSize = 10;
   public totalRecords = 0;
   public totalPages = 0;
-
+  selectedCustomers: any[] = [];
   constructor(
     private customerService: Customer,
     private router: Router
@@ -31,22 +31,18 @@ export class Dashboard implements OnInit {
     this.onGetData();
   }
 
-  // ✅ Lấy dữ liệu có phân trang
+
  onGetData(): void {
   this.customerService.getListCustomer(this.currentPage, this.pageSize).subscribe({
     next: (response) => {
-      console.log('API trả về:', response); // 👀 debug log
+      console.log('API trả về:', response); 
       
-      // ✅ Lấy mảng khách hàng từ response.data
       this.listCustomer = response.data ?? [];
-      
-      // ✅ Lấy tổng số bản ghi từ meta
+
       this.totalRecords = response.meta?.total ?? this.listCustomer.length;
       
-      // ✅ Tính lại tổng số trang
       this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
       
-      // ✅ Cập nhật danh sách hiển thị
       this.updatePagedData();
     },
     error: (err) => {
@@ -56,7 +52,6 @@ export class Dashboard implements OnInit {
 }
 
 
-  // ✅ Cập nhật lại dữ liệu hiển thị
   updatePagedData(): void {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
@@ -102,7 +97,6 @@ export class Dashboard implements OnInit {
     this.updatePagedData();
   }
 
-  // ✅ Chuyển trang Edit Customer
   onEditCustomer(customer: any): void {
     if (!customer?.customerCode) {
       console.warn('Không có mã khách hàng để sửa');
@@ -110,5 +104,24 @@ export class Dashboard implements OnInit {
     }
     console.log('Editing customer:', customer);
     this.router.navigate(['/update-customer', customer.customerCode]);
+  }
+
+   updateSelected() {
+    this.selectedCustomers = this.pagedCustomers.filter(c => c.selected);
+  }
+
+  onDeleteSelected() {
+    if (this.selectedCustomers.length === 0) return;
+
+    if (confirm(`Bạn có chắc muốn xóa ${this.selectedCustomers.length} khách hàng đã chọn không?`)) {
+      // Thực hiện xóa (gọi API thực tế)
+      const idsToDelete = this.selectedCustomers.map(c => c.customerCode);
+
+      // Xóa khỏi danh sách hiển thị
+      this.pagedCustomers = this.pagedCustomers.filter(c => !idsToDelete.includes(c.customerCode));
+
+      // Cập nhật lại danh sách chọn
+      this.updateSelected();
+    }
   }
 }

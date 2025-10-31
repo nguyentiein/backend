@@ -29,9 +29,7 @@ builder.Services.AddScoped<ICustomerTypeRepo, CustomerTypeRepo>();
 builder.Services.AddScoped<ICustomerTypeService, CustomerTypeService>();
 
 builder.Services.AddAutoMapper(typeof(ModelToResourseProfile).Assembly);
-
-builder.Configuration
-    .AddJsonFile("ResponseMessage.json", optional: false, reloadOnChange: true);
+builder.Configuration.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "ResponseMessage.json"), optional: true, reloadOnChange: true);
 
 builder.Services.Configure<ResponseMessage>(
     builder.Configuration.GetSection("ResponseMessage"));
@@ -85,14 +83,13 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 var app = builder.Build();
 
 app.UseMiddleware<ValidateExceptionMiddware>();
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 app.UseCors("AllowAll");
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

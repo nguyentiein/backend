@@ -78,8 +78,6 @@ uploadExcel(formData: FormData): Observable<any> {
 }
 
 
-
-
 }
 export interface Customer {
   customerType: string;
