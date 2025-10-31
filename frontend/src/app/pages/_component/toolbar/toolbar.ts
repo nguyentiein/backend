@@ -1,26 +1,44 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Customer } from '../../../core/services/customer';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './toolbar.html',
   styleUrls: ['./toolbar.css'], // ✅ sửa styleUrl -> styleUrls
 })
 export class Toolbar implements OnInit {
+ @Output() searchChanged = new EventEmitter<string>();
+  private searchSubject = new Subject<string>();
+    searchForm!: FormGroup;
 
+  keyword = '';
   constructor(
     private fb: FormBuilder,
     private customerService: Customer,  
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    this.searchForm = this.fb.group({
+      keyword: ['']
+    });
+
+    // ⏳ Khi người dùng dừng gõ 500ms thì phát sự kiện
+    this.searchForm.get('keyword')?.valueChanges
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe(value => this.searchChanged.emit(value));
+  }
 
   ngOnInit(): void {
     console.log('Toolbar loaded');
+  }
+    onSearchChange(value: string) {
+      console.log("haha");
+    this.searchSubject.next(value);
   }
 
   onImportExcel() {

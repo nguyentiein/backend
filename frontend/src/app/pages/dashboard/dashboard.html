@@ -1,4 +1,7 @@
-<app-toolbar></app-toolbar>
+<app-toolbar (searchChanged)="onSearch($event)"></app-toolbar>
+
+<!-- phần table hiển thị danh sách khách hàng -->
+
 <div class="table-wrapper">
   <table>
     <thead>
@@ -16,7 +19,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let customer of pagedCustomers"  (dblclick)="onEditCustomer(customer)">
+      <tr *ngFor="let customer of pagedCustomers;track"  (dblclick)="onEditCustomer(customer)">
         <td><input type="checkbox" /></td>
         <td>{{ customer?.customerType || '-' }}</td>
         <td>{{ customer?.customerCode || '-' }}</td>

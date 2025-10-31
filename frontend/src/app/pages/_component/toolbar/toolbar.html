@@ -8,7 +8,14 @@
   </div>
 
   <div class="toolbar-right">
-    <input type="text" placeholder="Tìm kiếm thông minh" />
+<form [formGroup]="searchForm">
+  <input type="text"
+         formControlName="keyword"
+         placeholder="Tìm kiếm thông minh..." />
+</form>
+
+
+
     <div class="icon-box">
   <i class="bi bi-buildings"></i>
     </div>
