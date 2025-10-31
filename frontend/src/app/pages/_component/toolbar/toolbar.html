@@ -1,36 +1,33 @@
-     <div class="toolbar">
+<div class="toolbar">
   <div class="toolbar-left">
     <select>
       <option>Tất cả khách hàng</option>
     </select>
     <p><i class="bi bi-pencil-square"></i> Sửa</p>
     <i class="bi bi-arrow-clockwise"></i>
+
+    <!-- ✅ Nút xóa chỉ hiện khi có chọn -->
+    <button *ngIf="showDelete" (click)="onDeleteCustomers()" class="btn btn-danger ms-2">
+      <i class="bi bi-trash"></i> Xóa đã chọn
+    </button>
   </div>
 
   <div class="toolbar-right">
-<form [formGroup]="searchForm">
-  <input type="text"
-         formControlName="keyword"
-         placeholder="Tìm kiếm thông minh..." />
-</form>
+    <form [formGroup]="searchForm">
+      <input type="text" formControlName="keyword" placeholder="Tìm kiếm thông minh..." />
+    </form>
 
+    <div class="icon-box"><i class="bi bi-buildings"></i></div>
 
-
-    <div class="icon-box">
-  <i class="bi bi-buildings"></i>
-    </div>
-
-    <button class="btn btn-primary" [routerLink]="['/create-customer']"><i class="bi bi-plus-lg"></i> Thêm</button>
-     <button (click)="onImportExcel()">
-    <i class="bi bi-file-earmark-excel"></i> Nhập từ Excel
+    <button class="btn btn-primary" [routerLink]="['/create-customer']">
+      <i class="bi bi-plus-lg"></i> Thêm
     </button>
 
-        <div class="icon-box">
-   <i class="bi bi-three-dots"></i>
-        </div>
- <div class="icon-box">
-<i class="bi bi-list"></i>
- </div>
-    
+    <button (click)="onImportExcel()">
+      <i class="bi bi-file-earmark-excel"></i> Nhập từ Excel
+    </button>
+
+    <div class="icon-box"><i class="bi bi-three-dots"></i></div>
+    <div class="icon-box"><i class="bi bi-list"></i></div>
   </div>
 </div>

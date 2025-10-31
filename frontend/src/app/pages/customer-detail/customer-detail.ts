@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Customer } from '../../core/services/customer';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerType } from '../../core/services/customertype';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-customer-detail',
@@ -21,6 +22,7 @@ export class CustomerDetail implements OnInit {
   contactChannels = ['Điện thoại', 'Email', 'Zalo'];
 
   constructor(
+    private toast: ToastrService,
     private fb: FormBuilder,
     private customerService: Customer,
     private customerTypeService:CustomerType,
@@ -103,25 +105,62 @@ GenerateCustomerCode() {
     if (this.id) {
       this.customerService.editCustomer(this.id, formData).subscribe({
         next: (res: any) => {
-          alert('Cập nhật khách hàng thành công');
+          this.toast.success("Sửa khách hàng thành công")
           this.router.navigate(['/customer']);
         },
         error: (err: any) => {
-          alert('Có lỗi xảy ra khi cập nhật khách hàng');
+          this.toast.error("Sửa khách hàng không thành công thành công")
           console.error(err);
         }
       });
     } else {
       this.customerService.addCustomer(formData).subscribe({
         next: (res: any) => {
-          alert('Thêm khách hàng thành công');
+         this.toast.success('Thêm thành công');
           this.router.navigate(['/customer']);
         },
         error: (err: any) => {
-          alert('Có lỗi xảy ra khi thêm khách hàng');
+           this.toast.error("Có lỗi khi thêm khách hàng")
           console.error(err);
         }
       });
     }
   }
+
+ onSubmitSave() {
+  if (this.customerForm.invalid) {
+    this.customerForm.markAllAsTouched();
+    return;
+  }
+
+  const data = this.customerForm.value;
+
+  // ✅ Gọi API thêm khách hàng
+  this.customerService.addCustomer(data).subscribe({
+    next: () => {
+      alert('Thêm khách hàng thành công');
+
+      // ✅ Gọi lại API để sinh mã mới
+      this.customerService.GenerateCustomerCode().subscribe({
+        next: (code: string) => {
+          // ✅ Reset form, gán mã mới
+          this.customerForm.reset();
+          this.customerForm.patchValue({ customerCode: code });
+
+          // ✅ Focus lại vào ô tên khách hàng
+          const nameInput = document.querySelector(
+            'input[formControlName="fullName"]'
+          ) as HTMLInputElement;
+          if (nameInput) nameInput.focus();
+        },
+        error: (err) => console.error('Không tải được mã khách hàng mới', err)
+      });
+    },
+    error: (err) => {
+      alert('Có lỗi khi thêm khách hàng');
+      console.error(err);
+    }
+  });
+}
+
 }

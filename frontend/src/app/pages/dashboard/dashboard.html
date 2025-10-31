@@ -1,12 +1,18 @@
-<app-toolbar (searchChanged)="onSearch($event)"></app-toolbar>
-
-<!-- phần table hiển thị danh sách khách hàng -->
+<app-toolbar
+  (searchChanged)="onSearch($event)"
+  (deleteClicked)="onDeleteSelected()"
+  (importSuccess)="onGetData()"
+  [showDelete]="selectedIds.size > 0">
+   
+</app-toolbar>
 
 <div class="table-wrapper">
   <table>
     <thead>
       <tr>
-        <th><input type="checkbox" /></th>
+        <th>
+          <input type="checkbox" (change)="toggleSelectAll($event)" />
+        </th>
         <th>Loại khách hàng</th>
         <th>Mã khách hàng</th>
         <th>Tên khách hàng</th>
@@ -18,23 +24,38 @@
         <th>Tên hàng hóa đã mua</th>
       </tr>
     </thead>
+
     <tbody>
-      <tr *ngFor="let customer of pagedCustomers;track"  (dblclick)="onEditCustomer(customer)">
-        <td><input type="checkbox" /></td>
-        <td>{{ customer?.customerType || '-' }}</td>
-        <td>{{ customer?.customerCode || '-' }}</td>
-        <td>{{ customer?.fullName || '-' }}</td>
-        <td>{{ customer?.tax || '-' }}</td>
-        <td>{{ customer?.shippingAddresses || '-' }}</td>
-        <td>{{ customer?.phoneNumber || '-' }}</td>
-        <td>{{ customer?.latestPurchaseDate ? (customer.latestPurchaseDate | date:'dd/MM/yyyy') : '-' }}</td>
-        <td>{{ customer?.purchasedProductCodes || '-' }}</td>
-        <td>{{ customer?.purchasedProductNames || '-' }}</td>
-      </tr>
+
+      <tr
+  *ngFor="let customer of pagedCustomers"
+  [class.selected]="selectedIds.has(customer.customerCode)"
+  (click)="onRowClick(customer.customerCode)"
+  (dblclick)="onEditCustomer(customer)"
+>
+  <td>
+    <input
+      type="checkbox"
+      [checked]="selectedIds.has(customer.customerCode)"
+      (click)="$event.stopPropagation()"
+      (change)="toggleSelect(customer.customerCode, $event.target.checked)"
+    />
+  </td>
+  <td>{{ customer.customerType || '-' }}</td>
+  <td>{{ customer.customerCode || '-' }}</td>
+  <td>{{ customer.fullName || '-' }}</td>
+  <td>{{ customer.tax || '-' }}</td>
+  <td>{{ customer.shippingAddresses || '-' }}</td>
+  <td>{{ customer.phoneNumber || '-' }}</td>
+  <td>{{ customer.latestPurchaseDate ? (customer.latestPurchaseDate | date:'dd/MM/yyyy') : '-' }}</td>
+  <td>{{ customer.purchasedProductCodes || '-' }}</td>
+  <td>{{ customer.purchasedProductNames || '-' }}</td>
+</tr>
+
+     
     </tbody>
   </table>
 </div>
-
 <footer class="footer">
   <div class="footer-left">
     <div>Tổng số: <strong>{{ totalRecords }}</strong></div>
@@ -77,3 +98,5 @@
     </div>
   </div>
 </footer>
+
+<!-- Floating Quick Buttons -->

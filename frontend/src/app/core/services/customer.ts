@@ -30,6 +30,11 @@ onFilterCustomer(keyword: string, page: number, pageSize: number): Observable<an
   return this.http.get<any>(url, { params });
 }
 
+ deleteCustomer(id: string): Observable<any> {
+  const url = `${environment.apiUrl}/api/v1/Customers/${id}`;
+  return this.http.delete(url);
+}
+
 
 
   getCustomerById(id: string): Observable<Customer> {

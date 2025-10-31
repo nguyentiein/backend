@@ -1,23 +1,29 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Customer } from '../../../core/services/customer';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule,CommonModule],
   templateUrl: './toolbar.html',
   styleUrls: ['./toolbar.css'], // ✅ sửa styleUrl -> styleUrls
 })
 export class Toolbar implements OnInit {
  @Output() searchChanged = new EventEmitter<string>();
+   @Output() deleteClicked = new EventEmitter<void>();
+   @Output() importSuccess = new EventEmitter<void>();
+
   private searchSubject = new Subject<string>();
     searchForm!: FormGroup;
-
+ @Input() showDelete = false; 
   keyword = '';
   constructor(
+      private toastr: ToastrService,
     private fb: FormBuilder,
     private customerService: Customer,  
     private route: ActivatedRoute,
@@ -42,8 +48,6 @@ export class Toolbar implements OnInit {
   }
 
   onImportExcel() {
-    alert('onImportExcel hoạt động!');
-    console.log("ok");
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.xlsx, .xls';
@@ -59,16 +63,23 @@ export class Toolbar implements OnInit {
         this.customerService.uploadExcel(formData).subscribe({
           next: (res:any) => {
             console.log('Import thành công:', res);
-            alert('Import Excel thành công!');
+           this.toastr.success("Thêm khách hàng thêm công");
+                 this.importSuccess.emit();
           },
           error: (err:any) => {
             console.error('Import thất bại:', err);
-            alert('Import Excel thất bại!');
+             this.toastr.error("Có lỗi khi thêm khách hàng");
           }
         });
       }
     };
 
+    
+
     input.click(); // ✅ lúc này được phép mở vì do click từ người dùng
+  }
+
+  onDeleteCustomers() {
+    this.deleteClicked.emit();
   }
 }
